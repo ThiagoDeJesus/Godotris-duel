@@ -12,6 +12,9 @@ var construction
 var construction_pos: Vector2
 var nodename: String
 
+func _ready() -> void:
+	randomize()
+
 func _physics_process(delta: float) -> void:
 	cannon_rotation()
 	$SpriteCannon.rotate(rot * rot_speed * delta)
@@ -33,7 +36,7 @@ func cannon_rotation() -> float:
 	
 func object_instance() -> void:
 	object_on = true
-	construction = construction_preloads[1].instance()
+	construction = construction_preloads[randi()%5].instance()
 	construction_pos = $SpriteCannon/MuzzleCannon.position
 	construction.position = construction_pos
 	construction.mode = 3
