@@ -1,5 +1,6 @@
 extends Node2D
 
+var node
 var rot: float = 0
 var rot_speed: int = 1
 var object_on: bool = false
@@ -23,6 +24,8 @@ func _physics_process(delta: float) -> void:
 		object_instance()
 	if object_on:
 		pre_shoot()
+		if Input.is_action_just_pressed("shot1"):
+			object_on = false
 	
 func convert_degree () -> void:
 	if $SpriteCannon.rotation_degrees > 360:
@@ -37,16 +40,17 @@ func cannon_rotation() -> float:
 func object_instance() -> void:
 	object_on = true
 	construction = construction_preloads[randi()%construction_preloads.size()].instance()
-	construction_pos = $SpriteCannon/MuzzleCannon.position
-	construction.position = construction_pos
-	construction.mode = 3
+	construction_pos = $SpriteCannon/MuzzleCannon.global_position
+	construction.global_position = construction_pos
+	#construction.mass = 0
 	nodename = construction.name
-	self.add_child(construction)
+	node = get_parent().add_child(construction)
 
 func pre_shoot() -> void:
 	construction_pos = $SpriteCannon/MuzzleCannon.global_position
-	get_node(nodename).global_position = construction_pos
-	get_node(nodename).rotate(get_physics_process_delta_time() * rot_speed)
+	get_parent().get_node(nodename).global_position = construction_pos
+	get_parent().get_node(nodename).rotate(get_physics_process_delta_time() * rot_speed)
 	
 func shoot() -> void:
+	
 	pass
