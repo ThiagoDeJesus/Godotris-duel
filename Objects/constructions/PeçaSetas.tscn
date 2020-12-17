@@ -5,12 +5,13 @@
 [node name="PeçaSetas" type="RigidBody2D"]
 
 [node name="Quadrado" parent="." instance=ExtResource( 1 )]
-position = Vector2( -8, 0 )
+position = Vector2( -8, 4 )
 
 [node name="Quadrado1" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, 4 )
 
 [node name="Quadrado2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 8, 0 )
+position = Vector2( 8, 4 )
 
 [node name="Quadrado3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 0, -8 )
+position = Vector2( 0, -4 )

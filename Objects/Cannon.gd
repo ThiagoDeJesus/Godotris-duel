@@ -36,13 +36,17 @@ func cannon_rotation() -> float:
 	
 func object_instance() -> void:
 	object_on = true
-	construction = construction_preloads[randi()%5].instance()
+	construction = construction_preloads[randi()%construction_preloads.size()].instance()
 	construction_pos = $SpriteCannon/MuzzleCannon.position
 	construction.position = construction_pos
 	construction.mode = 3
 	nodename = construction.name
 	self.add_child(construction)
 
-func pre_shoot() ->void:
+func pre_shoot() -> void:
 	construction_pos = $SpriteCannon/MuzzleCannon.global_position
 	get_node(nodename).global_position = construction_pos
+	get_node(nodename).rotate(get_physics_process_delta_time() * rot_speed)
+	
+func shoot() -> void:
+	pass
