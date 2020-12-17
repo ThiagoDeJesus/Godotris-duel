@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Objects/Quadrado.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Objects/PeçaReta.gd" type="Script" id=2]
+
+[node name="PeçaReta" type="RigidBody2D"]
+script = ExtResource( 2 )
+
+[node name="Quadrado" parent="." instance=ExtResource( 1 )]
+position = Vector2( -4, 0 )
+collision_layer = 0
+collision_mask = 0
+
+[node name="Quadrado2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 4, 0 )
+collision_layer = 0
+collision_mask = 0
+
+[node name="Quadrado3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 12, 0 )
+collision_layer = 0
+collision_mask = 0
+
+[node name="Quadrado4" parent="." instance=ExtResource( 1 )]
+position = Vector2( -11, 0 )
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
