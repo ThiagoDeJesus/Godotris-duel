@@ -12,4 +12,4 @@ texture = ExtResource( 1 )
 offset = Vector2( 0, -7 )
 
 [node name="MuzzleCannon" type="Position2D" parent="SpriteCannon"]
-position = Vector2( 0, -26 )
+position = Vector2( 0, -30 )
