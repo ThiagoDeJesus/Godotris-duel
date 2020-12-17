@@ -3,8 +3,11 @@ extends Node2D
 var rot: float = 0
 var rot_speed: int = 1
 var object_on: bool = false
-var object_preloads: = [preload("res://Objects/PeçaReta.tscn"), 
-preload("res://Objects/Quadrado.tscn")]
+var construction_preloads: = [preload("res://Objects/constructions/PeçaCurva.tscn"), 
+preload("res://Objects/constructions/PeçaL.tscn"), 
+preload("res://Objects/constructions/PeçaReta.tscn"),
+preload("res://Objects/constructions/PeçaSetas.tscn"),
+preload("res://Objects/constructions/Quadradao.tscn")]
 
 func _physics_process(delta: float) -> void:
 	cannon_rotation()
@@ -26,6 +29,7 @@ func cannon_rotation() -> float:
 	
 func object_instance() -> void:
 	object_on = true
-	var object = object_preloads[1].instance()
-	self.add_child(object)
-	
+	var construction = construction_preloads[1].instance()
+	var construction_pos = $SpriteCannon/MuzzleCannon.global_position
+	construction.global_position = construction_pos
+	$"../".add_child(construction)
