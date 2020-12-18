@@ -1,17 +1,17 @@
 extends Node2D
 
-var shot_vel: int = 300
-var previewrot: float = 0
-var rot: float = 0
-var rot_speed: int = 1
-var object_on: bool = false
 var construction_preloads: = [preload("res://Objects/constructions/PeçaCurva.tscn"), 
 preload("res://Objects/constructions/PecaL.tscn"), 
 preload("res://Objects/constructions/PeçaReta.tscn"),
 preload("res://Objects/constructions/PeçaSetas.tscn"),
 preload("res://Objects/constructions/Quadradao.tscn")]
-var previewconstruction
-var construction
+
+var shot_vel: int = 300
+var previewrot: float = 0
+var rot: float = 0
+var rot_speed: int = 1
+var object_on: bool = false
+
 var construction_pos: Vector2
 var nodename: String
 var previewnodename: String
@@ -34,7 +34,6 @@ func _physics_process(delta: float) -> void:
 		forca = lerp(forca, 1.0, .008)
 		$Container.text = str(int(forca * 100))
 	if Input.is_action_just_released("shot1") and forca > 0:
-		print(int(forca * 100))
 		object_instance()
 		get_parent().get_node(previewnodename).queue_free()
 		forca = 0
@@ -57,7 +56,7 @@ func preview_rotation() -> float:
 func object_preview() -> void:
 	object_on = true
 	forma = randi()%construction_preloads.size()
-	previewconstruction = construction_preloads[forma].instance()
+	var previewconstruction = construction_preloads[forma].instance()
 	var previewconstruction_pos: Vector2 = get_parent().get_node("Level/Player1Preview").global_position
 	previewconstruction.mode = 3
 	previewconstruction.collision_layer = 0
@@ -67,9 +66,8 @@ func object_preview() -> void:
 	previewnodename = previewconstruction.name
 	get_parent().add_child(previewconstruction)
 	
-
 func object_instance() -> void:
-	construction = construction_preloads[forma].instance()
+	var construction = construction_preloads[forma].instance()
 	construction_pos = $SpriteCannon/MuzzleCannon.global_position
 	construction.global_position = construction_pos
 	construction.global_rotation = get_parent().get_node(previewnodename).global_rotation
@@ -79,4 +77,3 @@ func object_instance() -> void:
 	var direction = get_parent().get_node(nodename).global_position.direction_to($SpriteCannon/ShootDirection.global_position).normalized()
 	get_parent().get_node(nodename).apply_central_impulse(direction * shot_vel * forca)
 
-	
