@@ -1,5 +1,6 @@
 extends Node2D
 
+var shot_vel: int = 180
 var node
 var rot: float = 0
 var rot_speed: int = 1
@@ -9,9 +10,12 @@ preload("res://Objects/constructions/PecaL.tscn"),
 preload("res://Objects/constructions/PeçaReta.tscn"),
 preload("res://Objects/constructions/PeçaSetas.tscn"),
 preload("res://Objects/constructions/Quadradao.tscn")]
+var previewconstruction
 var construction
 var construction_pos: Vector2
 var nodename: String
+var previewnodename: String
+var forma: int
 
 func _ready() -> void:
 	randomize()
@@ -21,11 +25,15 @@ func _physics_process(delta: float) -> void:
 	$SpriteCannon.rotate(rot * rot_speed * delta)
 	convert_degree()
 	if not object_on:
+		object_preview()
+	if Input.is_action_just_pressed("shot1"):
 		object_instance()
-	if object_on:
-		pre_shoot()
-		if Input.is_action_just_pressed("shot1"):
-			object_on = false
+		get_parent().get_node(previewnodename).queue_free()
+		object_on = false
+	#if object_on:
+		#pre_shoot()
+		#if Input.is_action_just_pressed("shot1"):
+			#object_on = false
 	
 func convert_degree () -> void:
 	if $SpriteCannon.rotation_degrees > 360:
@@ -37,19 +45,32 @@ func cannon_rotation() -> float:
 	rot = Input.get_action_strength("right1") - Input.get_action_strength("left1")
 	return rot
 	
-func object_instance() -> void:
+func object_preview() -> void:
 	object_on = true
-	construction = construction_preloads[randi()%construction_preloads.size()].instance()
+	forma = randi()%construction_preloads.size()
+	previewconstruction = construction_preloads[forma].instance()
+	var previewconstruction_pos: Vector2 = get_parent().get_node("Level/Player1Preview").global_position
+	previewconstruction.mode = 3
+	previewconstruction.global_position = previewconstruction_pos
+	previewconstruction.name = str(previewconstruction)
+	previewnodename = previewconstruction.name
+	get_parent().add_child(previewconstruction)
+	
+
+func object_instance() -> void:
+	construction = construction_preloads[forma].instance()
 	construction_pos = $SpriteCannon/MuzzleCannon.global_position
 	construction.global_position = construction_pos
-	#construction.mass = 0
+	construction.name = str(construction)
 	nodename = construction.name
-	node = get_parent().add_child(construction)
+	get_parent().add_child(construction)
+	var direction = get_parent().get_node(nodename).global_position.direction_to($SpriteCannon/ShootDirection.global_position).normalized()
+	get_parent().get_node(nodename).apply_central_impulse(direction * shot_vel)
 
-func pre_shoot() -> void:
-	construction_pos = $SpriteCannon/MuzzleCannon.global_position
-	get_parent().get_node(nodename).global_position = construction_pos
-	get_parent().get_node(nodename).rotate(get_physics_process_delta_time() * rot_speed)
+#func pre_shoot() -> void:
+	#construction_pos = $SpriteCannon/MuzzleCannon.global_position
+	#get_parent().get_node(nodename).global_position = construction_pos
+	#get_parent().get_node(nodename).rotate(get_physics_process_delta_time() * rot_speed)
 	
 func shoot() -> void:
 	
