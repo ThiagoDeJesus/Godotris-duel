@@ -91,3 +91,6 @@ __meta__ = {
 
 [node name="Cannon" parent="." instance=ExtResource( 2 )]
 position = Vector2( 139, 180 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 359, 191 )

@@ -16,4 +16,11 @@ position = Vector2( -8, 0 )
 
 [node name="Quadrado4" parent="." instance=ExtResource( 1 )]
 position = Vector2( 8, -8 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( -12, 4 )
+__meta__ = {
+"_gizmo_extents_": 1.0
+}
 [connection signal="body_entered" from="." to="." method="_on_PecaL_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_PecaL_body_shape_entered"]
